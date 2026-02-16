@@ -67,13 +67,12 @@ export async function POST(
     }
 
     if (error instanceof Error) {
-      console.error("Validation error:", error);
+      console.error("Validation error:", error.message);
       return NextResponse.json(
         {
           success: false as const,
           error: {
-            error:
-              "The extracted data was incomplete or malformed. Please try a different PDF.",
+            error: `The extracted data was incomplete or malformed: ${error.message}`,
             code: "INVALID_RESPONSE" as const,
           },
         },

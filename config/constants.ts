@@ -15,3 +15,17 @@ export const CLAUDE_MODEL = "claude-sonnet-4-5-20250929";
 export const CLAUDE_MAX_TOKENS = 4096;
 
 export const LINKEDIN_CONFIDENCE_THRESHOLD = 0.5;
+
+export const MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024;
+export const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const;
+
+export const RATING_TIERS = [
+  { min: 90, max: 98, label: "World Class", color: "#34d399" },
+  { min: 85, max: 89, label: "Elite", color: "#f5c518" },
+  { min: 75, max: 84, label: "Professional", color: "#a8b4c0" },
+  { min: 65, max: 74, label: "Rising Star", color: "#c47e2c" },
+] as const;
