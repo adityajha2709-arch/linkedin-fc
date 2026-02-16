@@ -1,23 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0d0d0f;
+  --background: #0a1628;
   --foreground: #ffffff;
-  --surface: #0d0d0f;
-  --card-bg: #16161a;
-  --card-bg-light: #1e1e24;
+  --surface: #0a1628;
+  --card-bg: #0f1f2e;
+  --card-bg-light: #152a3a;
   --text-primary: #ffffff;
-  --text-secondary: #8b8b8e;
-  --text-tertiary: #55555a;
-  --accent: #00e676;
-  --accent-dim: rgba(0, 230, 118, 0.15);
-  --pitch-green: #1a472a;
-  --pitch-green-light: #2d6a4f;
-  --gold: #f5c518;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #4a5568;
+  --accent: #D4A843;
+  --accent-dim: rgba(212, 168, 67, 0.15);
+  --pitch-green: #0d2818;
+  --pitch-green-light: #1a5c35;
+  --gold: #D4A843;
+  --gold-primary: #D4A843;
+  --gold-light: #E8C96A;
+  --gold-dark: #B8922E;
   --silver: #a8b4c0;
   --bronze: #c47e2c;
   --emerald: #34d399;
   --error: #ef4444;
+  --navy-deep: #060e1a;
+  --navy-mid: #0f1f2e;
+  --card-border: rgba(212, 168, 67, 0.12);
 }
 
 @theme inline {
@@ -34,10 +40,16 @@
   --color-pitch-green: var(--pitch-green);
   --color-pitch-green-light: var(--pitch-green-light);
   --color-gold: var(--gold);
+  --color-gold-primary: var(--gold-primary);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
   --color-silver: var(--silver);
   --color-bronze: var(--bronze);
   --color-emerald: var(--emerald);
   --color-error: var(--error);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-mid: var(--navy-mid);
+  --color-card-border: var(--card-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -48,8 +60,87 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Animations */
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.4); }
-  70% { box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(212, 168, 67, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(212, 168, 67, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 168, 67, 0); }
+}
+
+@keyframes rating-glow {
+  0%, 100% { filter: drop-shadow(0 0 12px rgba(212, 168, 67, 0.3)) drop-shadow(0 0 24px rgba(212, 168, 67, 0.1)); }
+  50% { filter: drop-shadow(0 0 20px rgba(212, 168, 67, 0.5)) drop-shadow(0 0 40px rgba(212, 168, 67, 0.2)); }
+}
+
+@keyframes stadium-light {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.06; }
+}
+
+/* Page texture overlay — diagonal gold stripes */
+.pitch-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 40px,
+    rgba(212, 168, 67, 0.015) 40px,
+    rgba(212, 168, 67, 0.015) 41px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Stadium floodlight glow from top center */
+.stadium-light::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(212, 168, 67, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: stadium-light 8s ease-in-out infinite;
+}
+
+/* Premium FIFA card base */
+.fifa-card {
+  background: linear-gradient(165deg, #0f1f2e 0%, #0a1929 100%);
+  border: 1px solid rgba(212, 168, 67, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(212, 168, 67, 0.06),
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(212, 168, 67, 0.06);
+  border-radius: 1rem;
+}
+
+/* Scouting dossier background with faint lines */
+.dossier-bg {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 24px,
+      rgba(212, 168, 67, 0.02) 24px,
+      rgba(212, 168, 67, 0.02) 25px
+    ),
+    linear-gradient(165deg, #0f1f2e 0%, #0a1929 100%);
+}
+
+/* Section header with trailing gold gradient line */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 168, 67, 0.3), transparent);
 }

@@ -13,7 +13,7 @@ interface PhotoUploadProps {
 export default function PhotoUpload({
   photo,
   onPhotoUpload,
-  glowColor = "#00e676",
+  glowColor = "#D4A843",
 }: PhotoUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,7 +52,7 @@ export default function PhotoUpload({
             padding: "3px",
             background: photo
               ? `linear-gradient(135deg, ${glowColor}, ${glowColor}80)`
-              : "linear-gradient(135deg, #55555a, #2a2a2f)",
+              : "linear-gradient(135deg, #4a5568, #2a2a2f)",
             WebkitMask:
               "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
             WebkitMaskComposite: "xor",
@@ -88,7 +88,10 @@ export default function PhotoUpload({
               <circle cx="12" cy="7" r="4" />
             </svg>
             {/* Plus badge */}
-            <div className="absolute bottom-1 right-1 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-sm font-bold text-black sm:bottom-2 sm:right-2">
+            <div
+              className="absolute bottom-1 right-1 flex h-7 w-7 items-center justify-center rounded-full text-sm font-bold sm:bottom-2 sm:right-2"
+              style={{ backgroundColor: "#D4A843", color: "#0a1628" }}
+            >
               +
             </div>
           </div>

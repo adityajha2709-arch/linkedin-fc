@@ -10,11 +10,27 @@ export default function EducationEntry({ entry }: EducationEntryProps) {
   const initial = entry.institution.charAt(0).toUpperCase();
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-card-bg" style={{ borderLeftWidth: "4px", borderLeftColor: "#2d6a4f" }}>
+    <div
+      className="overflow-hidden rounded-2xl"
+      style={{
+        background: "linear-gradient(165deg, #0f1f2e 0%, #0d2818 100%)",
+        border: "1px solid rgba(212,168,67,0.10)",
+        borderLeftWidth: "3px",
+        borderLeftColor: "#1a5c35",
+        boxShadow: "inset 0 1px 0 rgba(212,168,67,0.03)",
+      }}
+    >
       <div className="p-4 sm:p-5">
         <div className="flex items-start gap-3">
-          {/* Institution initial badge */}
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-pitch-green-light text-sm font-bold text-white">
+          {/* Institution initial badge — shield shape */}
+          <div
+            className="flex h-10 w-10 shrink-0 items-center justify-center text-sm font-bold text-white"
+            style={{
+              backgroundColor: "#1a5c35",
+              clipPath:
+                "polygon(50% 0%, 100% 12%, 100% 75%, 50% 100%, 0% 75%, 0% 12%)",
+            }}
+          >
             {initial}
           </div>
           <div className="flex-1 min-w-0">

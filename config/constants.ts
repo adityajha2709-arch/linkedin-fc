@@ -24,8 +24,8 @@ export const ALLOWED_IMAGE_TYPES = [
 ] as const;
 
 export const RATING_TIERS = [
-  { min: 90, max: 98, label: "World Class", color: "#34d399" },
-  { min: 85, max: 89, label: "Elite", color: "#f5c518" },
-  { min: 75, max: 84, label: "Professional", color: "#a8b4c0" },
-  { min: 65, max: 74, label: "Rising Star", color: "#c47e2c" },
+  { min: 90, max: 98, label: "World Class", color: "#FFD700" },
+  { min: 85, max: 89, label: "Elite", color: "#D4A843" },
+  { min: 75, max: 84, label: "Professional", color: "#B8922E" },
+  { min: 65, max: 74, label: "Rising Star", color: "#C9A84C" },
 ] as const;
