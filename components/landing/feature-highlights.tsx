@@ -70,9 +70,12 @@ export default function FeatureHighlights() {
       {features.map((f) => (
         <div
           key={f.title}
-          className="flex flex-col items-center gap-2 rounded-xl border border-white/[0.04] bg-white/[0.02] p-4 text-center"
+          className="flex flex-col items-center gap-2 rounded-xl border border-accent/10 bg-card-bg p-5 text-center transition-shadow hover:shadow-[0_0_20px_rgba(196,169,98,0.08)]"
+          style={{
+            borderTop: "2px solid rgba(196, 169, 98, 0.4)",
+          }}
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent">
             {f.icon}
           </div>
           <p className="text-xs font-semibold text-white">{f.title}</p>

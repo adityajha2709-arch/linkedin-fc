@@ -72,24 +72,44 @@ export default function ExportSteps() {
       <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">
         How to Export
       </p>
-      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        {steps.map((step, i) => (
-          <div
-            key={step.number}
-            className="animate-fade-in-up relative flex flex-col items-center gap-3 rounded-xl border border-white/[0.06] bg-card-bg p-5 text-center"
-            style={{ animationDelay: `${i * 150}ms` }}
-          >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-sm font-bold text-accent">
-              {step.number}
-            </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04]">
-              {step.icon}
-            </div>
-            <p className="text-sm font-semibold text-white">{step.title}</p>
-            <p className="text-xs text-text-tertiary">{step.detail}</p>
 
-            {i < steps.length - 1 && (
-              <div className="absolute -right-2.5 top-1/2 hidden -translate-y-1/2 text-text-tertiary sm:block">
+      {/* Single container panel */}
+      <div className="animate-fade-in-up relative mt-4 rounded-2xl bg-white/[0.02] px-6 py-6 sm:px-8">
+        {/* Dashed connecting line — desktop only */}
+        <div
+          className="pointer-events-none absolute hidden sm:block"
+          style={{
+            left: "16.67%",
+            right: "16.67%",
+            top: 51,
+            height: 0,
+            borderTop: "1px dashed rgba(196, 169, 98, 0.25)",
+          }}
+        />
+
+        <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:gap-0">
+          {steps.map((step, i) => (
+            <div key={step.number} className="flex items-start gap-4 sm:flex-1 sm:flex-col sm:items-center sm:gap-3 sm:text-center">
+              {/* Number circle */}
+              <div className="flex shrink-0 flex-col items-center gap-2">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-sm font-bold text-accent">
+                  {step.number}
+                </div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04]">
+                  {step.icon}
+                </div>
+              </div>
+
+              {/* Text */}
+              <div className="pt-1 sm:pt-0">
+                <p className="text-sm font-semibold text-white">{step.title}</p>
+                <p className="mt-0.5 text-xs text-text-tertiary">
+                  {step.detail}
+                </p>
+              </div>
+
+              {/* Arrow between steps — mobile vertical */}
+              {i < steps.length - 1 && (
                 <svg
                   width="12"
                   height="12"
@@ -97,13 +117,14 @@ export default function ExportSteps() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2.5"
+                  className="hidden text-accent/30"
                 >
-                  <polyline points="9 18 15 12 9 6" />
+                  <polyline points="6 9 12 15 18 9" />
                 </svg>
-              </div>
-            )}
-          </div>
-        ))}
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
