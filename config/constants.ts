@@ -5,8 +5,8 @@ export const MAX_SKILLS = 6;
 export const SKILL_SCORE_MIN = 0;
 export const SKILL_SCORE_MAX = 99;
 
-export const CARD_WIDTH = 450;
-export const CARD_HEIGHT = 630;
+export const CARD_WIDTH = 400;
+export const CARD_HEIGHT = 530;
 
 export const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 export const ALLOWED_MIME_TYPES = ["application/pdf"] as const;
@@ -36,9 +36,12 @@ export const CARD_GOLD_MID = "#D4B96E";
 export const CARD_GOLD_PRIMARY = "#C4A962";
 export const CARD_GOLD_DARK = "#A8893E";
 export const CARD_GOLD_DARKER = "#8B7232";
-export const CARD_BORDER_COLOR = "#5C4A1E";
+export const CARD_GOLD_CENTER = "#F0E0A0";
+export const CARD_GOLD_EDGE = "#8A6F2A";
+export const CARD_BORDER_COLOR = "#3D2E10";
 export const CARD_TEXT_DARK = "#2C1810";
-export const CARD_NAME_BAND = "#B8983A";
+export const CARD_NAME_BAND = "#B89440";
+export const CARD_NAME_TEXT = "#2C1810";
 export const CARD_STATS_BAND = "#A88A35";
 export const CARD_WATERMARK = "LinkedIn FC";
-export const CARD_BORDER_WIDTH = 4;
+export const CARD_BORDER_WIDTH = 2;

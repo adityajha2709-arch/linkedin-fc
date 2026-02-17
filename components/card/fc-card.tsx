@@ -6,20 +6,23 @@ import type { CardData } from "@/types/profile";
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
-  CARD_GOLD_LIGHT,
   CARD_GOLD_MID,
+  CARD_GOLD_CENTER,
+  CARD_GOLD_LIGHT,
   CARD_GOLD_PRIMARY,
   CARD_GOLD_DARK,
   CARD_GOLD_DARKER,
+  CARD_GOLD_EDGE,
   CARD_BORDER_COLOR,
   CARD_TEXT_DARK,
   CARD_NAME_BAND,
+  CARD_NAME_TEXT,
   CARD_BORDER_WIDTH,
   SKILL_SCORE_MIN,
   SKILL_SCORE_MAX,
   MAX_PHOTO_SIZE_BYTES,
 } from "@/config/constants";
-import { deriveRoleAbbrev, getCompanyInitial, getInitials } from "@/lib/role-abbrev";
+import { getInitials } from "@/lib/role-abbrev";
 
 interface FcCardProps {
   cardData: CardData;
@@ -29,8 +32,6 @@ interface FcCardProps {
 export default function FcCard({ cardData, onCardDataChange }: FcCardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
-  const pos = deriveRoleAbbrev(cardData.currentRole);
-  const companyInitial = getCompanyInitial(cardData.currentCompany);
   const initials = getInitials(cardData.name);
 
   function handleSkillLabelChange(index: number, label: string) {
@@ -64,6 +65,79 @@ export default function FcCard({ cardData, onCardDataChange }: FcCardProps) {
     e.target.value = "";
   }
 
+  function renderStatCell(skill: { label: string; score: number }, index: number) {
+    if (isEditing) {
+      return (
+        <div
+          className="flex flex-col items-center"
+          style={{ padding: "0 14px", minWidth: 80 }}
+        >
+          <input
+            type="text"
+            value={skill.label}
+            onChange={(e) => handleSkillLabelChange(index, e.target.value)}
+            className="w-16 bg-transparent text-center uppercase outline-none"
+            style={{
+              fontSize: 8,
+              fontWeight: 700,
+              color: "rgba(44, 24, 16, 0.7)",
+              letterSpacing: 0.5,
+              border: "1px solid rgba(44, 24, 16, 0.2)",
+              borderRadius: 2,
+              padding: "2px 3px",
+            }}
+            maxLength={20}
+          />
+          <input
+            type="number"
+            min={SKILL_SCORE_MIN}
+            max={SKILL_SCORE_MAX}
+            value={skill.score}
+            onChange={(e) => handleSkillScoreChange(index, e.target.value)}
+            className="mt-0.5 w-14 bg-transparent text-center outline-none"
+            style={{
+              fontSize: 26,
+              fontWeight: 900,
+              color: CARD_TEXT_DARK,
+              lineHeight: 1,
+              border: "1px solid rgba(44, 24, 16, 0.25)",
+              borderRadius: 2,
+            }}
+          />
+        </div>
+      );
+    }
+    return (
+      <div
+        className="flex flex-col items-center"
+        style={{ padding: "0 14px", minWidth: 80 }}
+      >
+        <span
+          className="text-center"
+          style={{
+            fontSize: skill.label.length > 12 ? 7 : 8,
+            fontWeight: 700,
+            color: "rgba(44, 24, 16, 0.55)",
+            letterSpacing: 1,
+          }}
+        >
+          {skill.label.toUpperCase()}
+        </span>
+        <span
+          className="leading-none"
+          style={{
+            fontSize: 28,
+            fontWeight: 900,
+            color: CARD_TEXT_DARK,
+            marginTop: 1,
+          }}
+        >
+          {skill.score}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="relative" style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}>
       {/* Edit toggle */}
@@ -94,28 +168,46 @@ export default function FcCard({ cardData, onCardDataChange }: FcCardProps) {
         style={{
           width: CARD_WIDTH,
           height: CARD_HEIGHT,
-          background: `linear-gradient(165deg, ${CARD_GOLD_LIGHT} 0%, ${CARD_GOLD_MID} 35%, ${CARD_GOLD_PRIMARY} 65%, ${CARD_GOLD_DARK} 100%)`,
-          borderRadius: 16,
+          background: `radial-gradient(ellipse at 50% 35%, ${CARD_GOLD_CENTER} 0%, ${CARD_GOLD_LIGHT} 25%, ${CARD_GOLD_MID} 45%, ${CARD_GOLD_PRIMARY} 65%, ${CARD_GOLD_DARK} 85%, ${CARD_GOLD_EDGE} 100%)`,
+          borderRadius: 14,
           border: `${CARD_BORDER_WIDTH}px solid ${CARD_BORDER_COLOR}`,
         }}
       >
-        {/* Geometric texture overlays */}
+        {/* Sunburst ray overlays — radiating light streaks like EA FC */}
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: "linear-gradient(30deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%)",
+            background: "linear-gradient(0deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%)",
           }}
         />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: "linear-gradient(150deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%)",
+            background: "linear-gradient(30deg, transparent 35%, rgba(255,255,255,0.06) 48%, transparent 55%)",
           }}
         />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: "linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%)",
+            background: "linear-gradient(60deg, transparent 35%, rgba(255,255,255,0.05) 48%, transparent 55%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.05) 48%, transparent 55%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "linear-gradient(150deg, transparent 35%, rgba(255,255,255,0.06) 48%, transparent 55%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "linear-gradient(90deg, transparent 35%, rgba(255,255,255,0.04) 50%, transparent 65%)",
           }}
         />
 
@@ -123,128 +215,117 @@ export default function FcCard({ cardData, onCardDataChange }: FcCardProps) {
         <div
           className="pointer-events-none absolute"
           style={{
-            top: 6,
-            left: 6,
-            right: 6,
-            bottom: 6,
-            borderRadius: 12,
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            top: 5,
+            left: 5,
+            right: 5,
+            bottom: 5,
+            borderRadius: 10,
+            border: "1px solid rgba(255, 255, 255, 0.12)",
           }}
         />
 
-        {/* === Top section: Rating column (left) + Photo (center) === */}
-        <div className="relative w-full" style={{ height: 280, padding: "24px 28px 0" }}>
-          {/* Rating + Position + Badge column (top-left) */}
+        {/* === Top section: Rating (left) + Photo (center) === */}
+        <div className="relative w-full" style={{ height: 280 }}>
+          {/* Rating — top-left */}
           <div
             className="absolute z-[2] flex flex-col items-center"
-            style={{ left: 32, top: 28 }}
+            style={{ left: 24, top: 18 }}
           >
             <span
               className="leading-none"
-              style={{ fontSize: 64, fontWeight: 900, color: CARD_TEXT_DARK }}
+              style={{
+                fontSize: 56,
+                fontWeight: 900,
+                color: CARD_TEXT_DARK,
+                letterSpacing: -1,
+              }}
             >
               {cardData.overallRating}
             </span>
-            <span
-              style={{
-                fontSize: 20,
-                fontWeight: 700,
-                color: CARD_TEXT_DARK,
-                letterSpacing: 2,
-                marginTop: 2,
-              }}
-            >
-              {pos}
-            </span>
-            {/* Company badge */}
-            <div
-              className="flex items-center justify-center"
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 6,
-                background: `linear-gradient(180deg, ${CARD_GOLD_DARK}, ${CARD_GOLD_DARKER})`,
-                border: `1px solid ${CARD_TEXT_DARK}`,
-                marginTop: 8,
-              }}
-            >
-              <span style={{ fontSize: 15, fontWeight: 700, color: CARD_TEXT_DARK }}>
-                {companyInitial}
-              </span>
-            </div>
           </div>
 
-          {/* Photo (centered) */}
-          <button
-            type="button"
-            onClick={() => isEditing && photoInputRef.current?.click()}
-            className="group absolute overflow-hidden"
+          {/* Photo frame with shadow glow */}
+          <div
+            className="absolute flex items-center justify-center"
             style={{
               left: "50%",
-              marginLeft: -90,
-              top: 20,
-              width: 180,
-              height: 220,
-              borderRadius: 8,
-              backgroundColor: "rgba(44, 24, 16, 0.1)",
-              cursor: isEditing ? "pointer" : "default",
-              border: "none",
-              padding: 0,
+              marginLeft: -99,
+              top: 16,
+              width: 198,
+              height: 238,
+              borderRadius: 10,
+              background: "rgba(44, 24, 16, 0.15)",
             }}
-            disabled={!isEditing}
           >
-            {cardData.photo ? (
-              <Image
-                src={cardData.photo}
-                alt="Player photo"
-                fill
-                className="object-cover"
-                unoptimized
-                style={{ borderRadius: 8 }}
-              />
-            ) : (
-              <span
-                className="flex h-full w-full items-center justify-center"
-                style={{
-                  fontSize: 56,
-                  fontWeight: 700,
-                  color: CARD_TEXT_DARK,
-                  opacity: 0.5,
-                }}
-              >
-                {initials}
-              </span>
-            )}
-
-            {/* Bottom fade overlay */}
-            <div
-              className="pointer-events-none absolute bottom-0 left-0 right-0"
+            {/* Photo container as upload button */}
+            <button
+              type="button"
+              onClick={() => isEditing && photoInputRef.current?.click()}
+              className="group relative flex items-center justify-center overflow-hidden"
               style={{
-                height: 70,
-                background: `linear-gradient(to top, ${CARD_GOLD_MID}, rgba(212, 185, 110, 0))`,
+                width: 190,
+                height: 230,
+                borderRadius: 8,
+                border: `3px solid ${CARD_GOLD_DARKER}`,
+                backgroundColor: "rgba(44, 24, 16, 0.08)",
+                cursor: isEditing ? "pointer" : "default",
+                padding: 0,
               }}
-            />
-
-            {/* Edit overlay */}
-            {isEditing && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30" style={{ borderRadius: 8 }}>
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="opacity-0 transition-opacity group-hover:opacity-100"
+              disabled={!isEditing}
+            >
+              {cardData.photo ? (
+                <Image
+                  src={cardData.photo}
+                  alt="Player photo"
+                  fill
+                  className="object-cover object-top"
+                  style={{ borderRadius: 6 }}
+                  unoptimized
+                />
+              ) : (
+                <span
+                  className="flex h-full w-full items-center justify-center"
+                  style={{
+                    fontSize: 56,
+                    fontWeight: 700,
+                    color: CARD_TEXT_DARK,
+                    opacity: 0.35,
+                  }}
                 >
-                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                  <circle cx="12" cy="13" r="4" />
-                </svg>
-              </div>
-            )}
-          </button>
+                  {initials}
+                </span>
+              )}
+
+              {/* Subtle bottom fade inside frame */}
+              <div
+                className="pointer-events-none absolute bottom-0 left-0 right-0"
+                style={{
+                  height: 50,
+                  background: "linear-gradient(to top, rgba(139, 114, 50, 0.5), rgba(139, 114, 50, 0))",
+                }}
+              />
+
+              {/* Edit overlay */}
+              {isEditing && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30" style={{ borderRadius: 6 }}>
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
+                </div>
+              )}
+            </button>
+          </div>
 
           <input
             ref={photoInputRef}
@@ -255,21 +336,29 @@ export default function FcCard({ cardData, onCardDataChange }: FcCardProps) {
           />
         </div>
 
+        {/* Thin separator line above name */}
+        <div
+          style={{
+            width: "70%",
+            height: 1,
+            backgroundColor: "rgba(44, 24, 16, 0.2)",
+          }}
+        />
+
         {/* === Name band === */}
         <div
           className="flex w-full flex-col items-center"
           style={{
-            background: `linear-gradient(90deg, rgba(184, 152, 58, 0), ${CARD_NAME_BAND}, ${CARD_NAME_BAND}, rgba(184, 152, 58, 0))`,
-            padding: "10px 0 8px",
-            marginTop: 8,
+            background: `linear-gradient(90deg, rgba(184,148,64,0), ${CARD_NAME_BAND}, ${CARD_NAME_BAND}, rgba(184,148,64,0))`,
+            padding: "8px 0 6px",
           }}
         >
           <span
             className="text-center"
             style={{
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: 700,
-              color: CARD_TEXT_DARK,
+              color: CARD_NAME_TEXT,
               letterSpacing: 3,
             }}
           >
@@ -279,117 +368,85 @@ export default function FcCard({ cardData, onCardDataChange }: FcCardProps) {
 
         {/* Role + Company */}
         <span
-          className="mt-1 text-center"
+          className="text-center"
           style={{
             fontSize: 10,
             fontWeight: 400,
-            color: "rgba(44, 24, 16, 0.55)",
+            color: "rgba(44, 24, 16, 0.5)",
+            marginTop: 2,
           }}
         >
           {cardData.currentRole} · {cardData.currentCompany}
         </span>
 
-        {/* === Stats row === */}
+        {/* === Stats grid (2 rows of 3) === */}
         <div
-          className="flex items-center justify-center"
+          className="flex flex-col"
           style={{
             width: "90%",
-            padding: "14px 0",
-            marginTop: 16,
+            marginTop: 6,
             borderTop: "1px solid rgba(44, 24, 16, 0.15)",
-            borderBottom: "1px solid rgba(44, 24, 16, 0.15)",
-            background: "linear-gradient(90deg, rgba(168, 138, 53, 0), rgba(168, 138, 53, 0.25), rgba(168, 138, 53, 0.25), rgba(168, 138, 53, 0))",
           }}
         >
-          {cardData.skills.slice(0, 6).map((skill, i) => (
-            <div key={i} className="flex items-center">
-              {/* Stat cell */}
-              <div
-                className="flex flex-col items-center"
-                style={{ padding: "0 10px", minWidth: 52 }}
-              >
-                {isEditing ? (
-                  <>
-                    <input
-                      type="text"
-                      value={skill.label}
-                      onChange={(e) => handleSkillLabelChange(i, e.target.value)}
-                      className="w-14 bg-transparent text-center uppercase outline-none"
-                      style={{
-                        fontSize: 8,
-                        fontWeight: 700,
-                        color: "rgba(44, 24, 16, 0.7)",
-                        letterSpacing: 0.5,
-                        border: "1px solid rgba(44, 24, 16, 0.2)",
-                        borderRadius: 2,
-                        padding: "1px 2px",
-                      }}
-                      maxLength={20}
-                    />
-                    <input
-                      type="number"
-                      min={SKILL_SCORE_MIN}
-                      max={SKILL_SCORE_MAX}
-                      value={skill.score}
-                      onChange={(e) => handleSkillScoreChange(i, e.target.value)}
-                      className="mt-1 w-12 bg-transparent text-center outline-none"
-                      style={{
-                        fontSize: 22,
-                        fontWeight: 900,
-                        color: CARD_TEXT_DARK,
-                        lineHeight: 1,
-                        border: "1px solid rgba(44, 24, 16, 0.25)",
-                        borderRadius: 2,
-                      }}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <span
-                      className="text-center"
-                      style={{
-                        fontSize: skill.label.length > 10 ? 7 : 9,
-                        fontWeight: 700,
-                        color: "rgba(44, 24, 16, 0.7)",
-                        letterSpacing: 0.5,
-                      }}
-                    >
-                      {skill.label.toUpperCase()}
-                    </span>
-                    <span
-                      className="leading-none"
-                      style={{
-                        fontSize: 24,
-                        fontWeight: 900,
-                        color: CARD_TEXT_DARK,
-                        marginTop: 3,
-                      }}
-                    >
-                      {skill.score}
-                    </span>
-                  </>
+          {/* Row 1: skills[0..2] */}
+          <div
+            className="flex items-center justify-center"
+            style={{ padding: "8px 0 6px" }}
+          >
+            {cardData.skills.slice(0, 3).map((skill, i) => (
+              <div key={i} className="flex items-center">
+                {renderStatCell(skill, i)}
+                {i < 2 && (
+                  <div
+                    style={{
+                      width: 1,
+                      height: 32,
+                      backgroundColor: "rgba(44, 24, 16, 0.12)",
+                    }}
+                  />
                 )}
               </div>
-              {/* Divider (not after last) */}
-              {i < 5 && (
-                <div
-                  style={{
-                    width: 1,
-                    height: 32,
-                    backgroundColor: "rgba(44, 24, 16, 0.2)",
-                  }}
-                />
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Horizontal divider between rows */}
+          <div
+            className="self-center"
+            style={{
+              width: "75%",
+              height: 1,
+              backgroundColor: "rgba(44, 24, 16, 0.1)",
+            }}
+          />
+
+          {/* Row 2: skills[3..5] */}
+          <div
+            className="flex items-center justify-center"
+            style={{ padding: "6px 0 8px" }}
+          >
+            {cardData.skills.slice(3, 6).map((skill, i) => (
+              <div key={i + 3} className="flex items-center">
+                {renderStatCell(skill, i + 3)}
+                {i < 2 && (
+                  <div
+                    style={{
+                      width: 1,
+                      height: 32,
+                      backgroundColor: "rgba(44, 24, 16, 0.12)",
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* === Watermark === */}
-        <div className="mt-auto flex w-full justify-center pb-3">
+        <div className="mt-1.5 flex w-full justify-center pb-2">
           <span
             style={{
-              fontSize: 8,
-              color: "rgba(44, 24, 16, 0.25)",
+              fontSize: 6,
+              color: "rgba(44, 24, 16, 0.15)",
               fontWeight: 700,
               letterSpacing: 2,
             }}

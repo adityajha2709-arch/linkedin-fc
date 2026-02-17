@@ -11,13 +11,16 @@ import {
   CARD_GOLD_PRIMARY,
   CARD_GOLD_DARK,
   CARD_GOLD_DARKER,
+  CARD_GOLD_CENTER,
+  CARD_GOLD_EDGE,
   CARD_BORDER_COLOR,
   CARD_TEXT_DARK,
   CARD_NAME_BAND,
+  CARD_NAME_TEXT,
   CARD_WATERMARK,
   CARD_BORDER_WIDTH,
 } from "@/config/constants";
-import { deriveRoleAbbrev, getCompanyInitial, getInitials } from "@/lib/role-abbrev";
+import { getInitials } from "@/lib/role-abbrev";
 import type { ReactNode } from "react";
 
 // Cache font buffers at module level (loaded once per cold start)
@@ -38,8 +41,6 @@ async function loadFonts() {
 }
 
 function buildCardJsx(data: CardData): ReactNode {
-  const pos = deriveRoleAbbrev(data.currentRole);
-  const companyInitial = getCompanyInitial(data.currentCompany);
   const initials = getInitials(data.name);
 
   return (
@@ -50,15 +51,15 @@ function buildCardJsx(data: CardData): ReactNode {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        background: `linear-gradient(165deg, ${CARD_GOLD_LIGHT} 0%, ${CARD_GOLD_MID} 35%, ${CARD_GOLD_PRIMARY} 65%, ${CARD_GOLD_DARK} 100%)`,
+        background: `radial-gradient(ellipse at 50% 35%, ${CARD_GOLD_CENTER} 0%, ${CARD_GOLD_LIGHT} 25%, ${CARD_GOLD_MID} 45%, ${CARD_GOLD_PRIMARY} 65%, ${CARD_GOLD_DARK} 85%, ${CARD_GOLD_EDGE} 100%)`,
         fontFamily: "Geist",
         position: "relative",
-        borderRadius: 16,
+        borderRadius: 14,
         overflow: "hidden",
         border: `${CARD_BORDER_WIDTH}px solid ${CARD_BORDER_COLOR}`,
       }}
     >
-      {/* Geometric texture overlays */}
+      {/* Sunburst ray overlays — radiating light streaks like EA FC */}
       <div
         style={{
           position: "absolute",
@@ -66,7 +67,7 @@ function buildCardJsx(data: CardData): ReactNode {
           left: 0,
           right: 0,
           bottom: 0,
-          background: `linear-gradient(30deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%)`,
+          background: `linear-gradient(0deg, transparent 30%, rgba(255,255,255,0.07) 50%, transparent 70%)`,
           display: "flex",
         }}
       />
@@ -77,7 +78,7 @@ function buildCardJsx(data: CardData): ReactNode {
           left: 0,
           right: 0,
           bottom: 0,
-          background: `linear-gradient(150deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%)`,
+          background: `linear-gradient(30deg, transparent 35%, rgba(255,255,255,0.06) 48%, transparent 55%)`,
           display: "flex",
         }}
       />
@@ -88,7 +89,40 @@ function buildCardJsx(data: CardData): ReactNode {
           left: 0,
           right: 0,
           bottom: 0,
-          background: `linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%)`,
+          background: `linear-gradient(60deg, transparent 35%, rgba(255,255,255,0.05) 48%, transparent 55%)`,
+          display: "flex",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: `linear-gradient(120deg, transparent 35%, rgba(255,255,255,0.05) 48%, transparent 55%)`,
+          display: "flex",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: `linear-gradient(150deg, transparent 35%, rgba(255,255,255,0.06) 48%, transparent 55%)`,
+          display: "flex",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: `linear-gradient(90deg, transparent 35%, rgba(255,255,255,0.04) 50%, transparent 65%)`,
           display: "flex",
         }}
       />
@@ -97,156 +131,147 @@ function buildCardJsx(data: CardData): ReactNode {
       <div
         style={{
           position: "absolute",
-          top: 6,
-          left: 6,
-          right: 6,
-          bottom: 6,
-          borderRadius: 12,
-          border: `1px solid rgba(255, 255, 255, 0.1)`,
+          top: 5,
+          left: 5,
+          right: 5,
+          bottom: 5,
+          borderRadius: 10,
+          border: `1px solid rgba(255, 255, 255, 0.12)`,
           display: "flex",
         }}
       />
 
-      {/* === Top section: Rating column (left) + Photo (center) === */}
+      {/* === Top section: Rating (left) + Photo (center) === */}
       <div
         style={{
           display: "flex",
           width: "100%",
           position: "relative",
-          padding: "24px 28px 0",
           height: 280,
         }}
       >
-        {/* Rating + Position + Badge column (top-left) */}
+        {/* Rating — top-left */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             position: "absolute",
-            left: 32,
-            top: 28,
+            left: 24,
+            top: 18,
             zIndex: 2,
           }}
         >
-          {/* Rating */}
           <span
             style={{
-              fontSize: 64,
+              fontSize: 56,
               fontWeight: 900,
               color: CARD_TEXT_DARK,
               lineHeight: 1,
+              letterSpacing: -1,
             }}
           >
             {data.overallRating}
           </span>
-          {/* Position */}
-          <span
-            style={{
-              fontSize: 20,
-              fontWeight: 700,
-              color: CARD_TEXT_DARK,
-              letterSpacing: 2,
-              marginTop: 2,
-            }}
-          >
-            {pos}
-          </span>
-          {/* Company badge */}
-          <div
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 6,
-              background: `linear-gradient(180deg, ${CARD_GOLD_DARK}, ${CARD_GOLD_DARKER})`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: `1px solid ${CARD_TEXT_DARK}`,
-              marginTop: 8,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 15,
-                fontWeight: 700,
-                color: CARD_TEXT_DARK,
-              }}
-            >
-              {companyInitial}
-            </span>
-          </div>
         </div>
 
-        {/* Photo (centered) */}
+        {/* Photo frame with shadow glow */}
         <div
           style={{
             position: "absolute",
             left: "50%",
-            marginLeft: -90,
-            top: 20,
-            width: 180,
-            height: 220,
-            borderRadius: 8,
-            overflow: "hidden",
+            marginLeft: -99,
+            top: 16,
+            width: 198,
+            height: 238,
+            borderRadius: 10,
+            background: "rgba(44, 24, 16, 0.15)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: `rgba(44, 24, 16, 0.1)`,
           }}
         >
-          {data.photo ? (
-            /* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */
-            <img
-              src={data.photo}
-              width={180}
-              height={220}
-              style={{ objectFit: "cover" }}
-            />
-          ) : (
-            <span
-              style={{
-                fontSize: 56,
-                fontWeight: 700,
-                color: CARD_TEXT_DARK,
-                opacity: 0.5,
-              }}
-            >
-              {initials}
-            </span>
-          )}
-          {/* Bottom fade overlay */}
+          {/* Photo container */}
           <div
             style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 70,
-              background: `linear-gradient(to top, ${CARD_GOLD_MID}, rgba(212, 185, 110, 0))`,
+              width: 190,
+              height: 230,
+              borderRadius: 8,
+              border: `3px solid ${CARD_GOLD_DARKER}`,
+              overflow: "hidden",
               display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(44, 24, 16, 0.08)",
+              position: "relative",
             }}
-          />
+          >
+            {data.photo ? (
+              /* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */
+              <img
+                src={data.photo}
+                width={190}
+                height={230}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "top center",
+                  borderRadius: 6,
+                }}
+              />
+            ) : (
+              <span
+                style={{
+                  fontSize: 56,
+                  fontWeight: 700,
+                  color: CARD_TEXT_DARK,
+                  opacity: 0.35,
+                }}
+              >
+                {initials}
+              </span>
+            )}
+            {/* Subtle bottom fade inside frame */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 50,
+                background: `linear-gradient(to top, rgba(139, 114, 50, 0.5), rgba(139, 114, 50, 0))`,
+                display: "flex",
+              }}
+            />
+          </div>
         </div>
       </div>
+
+      {/* Thin separator line above name */}
+      <div
+        style={{
+          width: "70%",
+          height: 1,
+          background: "rgba(44, 24, 16, 0.2)",
+          display: "flex",
+        }}
+      />
 
       {/* === Name band === */}
       <div
         style={{
           width: "100%",
-          background: `linear-gradient(90deg, rgba(184, 152, 58, 0), ${CARD_NAME_BAND}, ${CARD_NAME_BAND}, rgba(184, 152, 58, 0))`,
-          padding: "10px 0 8px",
+          background: `linear-gradient(90deg, rgba(184,148,64,0), ${CARD_NAME_BAND}, ${CARD_NAME_BAND}, rgba(184,148,64,0))`,
+          padding: "8px 0 6px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop: 8,
         }}
       >
         <span
           style={{
-            fontSize: 22,
+            fontSize: 24,
             fontWeight: 700,
-            color: CARD_TEXT_DARK,
+            color: CARD_NAME_TEXT,
             letterSpacing: 3,
             textAlign: "center",
           }}
@@ -260,76 +285,146 @@ function buildCardJsx(data: CardData): ReactNode {
         style={{
           fontSize: 10,
           fontWeight: 400,
-          color: "rgba(44, 24, 16, 0.55)",
-          marginTop: 4,
+          color: "rgba(44, 24, 16, 0.5)",
+          marginTop: 2,
           textAlign: "center",
         }}
       >
         {data.currentRole} · {data.currentCompany}
       </span>
 
-      {/* === Stats row === */}
+      {/* === Stats grid (2 rows of 3) === */}
       <div
         style={{
           display: "flex",
+          flexDirection: "column",
           width: "90%",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "14px 0",
-          marginTop: 16,
-          borderTop: `1px solid rgba(44, 24, 16, 0.15)`,
-          borderBottom: `1px solid rgba(44, 24, 16, 0.15)`,
-          background: `linear-gradient(90deg, rgba(168, 138, 53, 0), rgba(168, 138, 53, 0.25), rgba(168, 138, 53, 0.25), rgba(168, 138, 53, 0))`,
+          marginTop: 6,
+          borderTop: "1px solid rgba(44, 24, 16, 0.15)",
         }}
       >
-        {data.skills.slice(0, 6).map((skill, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center" }}>
-            {/* Stat cell */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: "0 10px",
-                minWidth: 52,
-              }}
-            >
-              <span
-                style={{
-                  fontSize: skill.label.length > 10 ? 7 : 9,
-                  fontWeight: 700,
-                  color: "rgba(44, 24, 16, 0.7)",
-                  letterSpacing: 0.5,
-                  textAlign: "center",
-                }}
-              >
-                {skill.label.toUpperCase()}
-              </span>
-              <span
-                style={{
-                  fontSize: 24,
-                  fontWeight: 900,
-                  color: CARD_TEXT_DARK,
-                  lineHeight: 1,
-                  marginTop: 3,
-                }}
-              >
-                {skill.score}
-              </span>
-            </div>
-            {/* Divider (not after last) */}
-            {i < 5 && (
+        {/* Row 1: skills[0..2] */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "8px 0 6px",
+          }}
+        >
+          {data.skills.slice(0, 3).map((skill, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center" }}>
               <div
                 style={{
-                  width: 1,
-                  height: 32,
-                  background: "rgba(44, 24, 16, 0.2)",
                   display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: "0 14px",
+                  minWidth: 80,
                 }}
-              />
-            )}
-          </div>
-        ))}
+              >
+                <span
+                  style={{
+                    fontSize: skill.label.length > 12 ? 7 : 8,
+                    fontWeight: 700,
+                    color: "rgba(44, 24, 16, 0.55)",
+                    letterSpacing: 1,
+                  }}
+                >
+                  {skill.label.toUpperCase()}
+                </span>
+                <span
+                  style={{
+                    fontSize: 28,
+                    fontWeight: 900,
+                    color: CARD_TEXT_DARK,
+                    lineHeight: 1,
+                    marginTop: 1,
+                  }}
+                >
+                  {skill.score}
+                </span>
+              </div>
+              {i < 2 && (
+                <div
+                  style={{
+                    width: 1,
+                    height: 32,
+                    background: "rgba(44, 24, 16, 0.12)",
+                    display: "flex",
+                  }}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Horizontal divider between rows */}
+        <div
+          style={{
+            width: "75%",
+            height: 1,
+            background: "rgba(44, 24, 16, 0.1)",
+            alignSelf: "center",
+            display: "flex",
+          }}
+        />
+
+        {/* Row 2: skills[3..5] */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "6px 0 8px",
+          }}
+        >
+          {data.skills.slice(3, 6).map((skill, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: "0 14px",
+                  minWidth: 80,
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: skill.label.length > 12 ? 7 : 8,
+                    fontWeight: 700,
+                    color: "rgba(44, 24, 16, 0.55)",
+                    letterSpacing: 1,
+                  }}
+                >
+                  {skill.label.toUpperCase()}
+                </span>
+                <span
+                  style={{
+                    fontSize: 28,
+                    fontWeight: 900,
+                    color: CARD_TEXT_DARK,
+                    lineHeight: 1,
+                    marginTop: 1,
+                  }}
+                >
+                  {skill.score}
+                </span>
+              </div>
+              {i < 2 && (
+                <div
+                  style={{
+                    width: 1,
+                    height: 32,
+                    background: "rgba(44, 24, 16, 0.12)",
+                    display: "flex",
+                  }}
+                />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* === Watermark === */}
@@ -338,14 +433,14 @@ function buildCardJsx(data: CardData): ReactNode {
           display: "flex",
           justifyContent: "center",
           width: "100%",
-          marginTop: "auto",
-          paddingBottom: 12,
+          marginTop: 6,
+          paddingBottom: 8,
         }}
       >
         <span
           style={{
-            fontSize: 8,
-            color: "rgba(44, 24, 16, 0.25)",
+            fontSize: 6,
+            color: "rgba(44, 24, 16, 0.15)",
             fontWeight: 700,
             letterSpacing: 2,
           }}
