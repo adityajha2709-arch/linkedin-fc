@@ -30,7 +30,15 @@ export const RATING_TIERS = [
   { min: 65, max: 74, label: "Rising Star", color: "#C9A84C" },
 ] as const;
 
-export const CARD_BG_GRADIENT_START = "#D4A843";
-export const CARD_BG_GRADIENT_END = "#B8922E";
-export const CARD_TEXT_DARK = "#0a1628";
+// FUT Card Colors
+export const CARD_GOLD_LIGHT = "#E8D48B";
+export const CARD_GOLD_MID = "#D4B96E";
+export const CARD_GOLD_PRIMARY = "#C4A962";
+export const CARD_GOLD_DARK = "#A8893E";
+export const CARD_GOLD_DARKER = "#8B7232";
+export const CARD_BORDER_COLOR = "#5C4A1E";
+export const CARD_TEXT_DARK = "#2C1810";
+export const CARD_NAME_BAND = "#B8983A";
+export const CARD_STATS_BAND = "#A88A35";
 export const CARD_WATERMARK = "LinkedIn FC";
+export const CARD_BORDER_WIDTH = 4;

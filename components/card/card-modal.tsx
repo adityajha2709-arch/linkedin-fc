@@ -145,12 +145,12 @@ export default function CardModal({ isOpen, onClose }: CardModalProps) {
           className="flex items-center gap-2 rounded-2xl px-8 py-3 text-sm font-bold uppercase tracking-wide transition-all hover:scale-[1.02]"
           style={{
             background: isDownloading
-              ? "rgba(212, 168, 67, 0.4)"
-              : "linear-gradient(135deg, #D4A843 0%, #B8922E 50%, #D4A843 100%)",
-            color: "#0a1628",
+              ? "rgba(196, 169, 98, 0.4)"
+              : "linear-gradient(135deg, #E8D48B 0%, #C4A962 50%, #E8D48B 100%)",
+            color: "#2C1810",
             boxShadow: isDownloading
               ? "none"
-              : "0 0 20px rgba(212,168,67,0.3), 0 4px 12px rgba(0,0,0,0.3)",
+              : "0 0 20px rgba(196,169,98,0.3), 0 4px 12px rgba(0,0,0,0.3)",
             cursor: isDownloading ? "not-allowed" : "pointer",
           }}
         >

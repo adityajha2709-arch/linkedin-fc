@@ -76,19 +76,82 @@ export default function ProfilePage() {
           <EducationTimeline entries={profileData.education} />
 
           {/* Generate Card CTA */}
-          <div className="flex justify-center pb-8">
+          <div className="flex flex-col items-center gap-6 pb-8">
+            {/* Generic card preview (decorative) */}
+            <div
+              className="relative cursor-pointer opacity-80 transition-all hover:scale-[1.02] hover:opacity-100"
+              onClick={() => setShowCard(true)}
+              style={{
+                width: 200,
+                height: 280,
+                borderRadius: 12,
+                border: "3px solid #5C4A1E",
+                background: "linear-gradient(165deg, #E8D48B 0%, #D4B96E 35%, #C4A962 65%, #A8893E 100%)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(196,169,98,0.2)",
+                overflow: "hidden",
+                padding: "16px 12px",
+              }}
+            >
+              {/* Mini rating */}
+              <span
+                style={{
+                  fontSize: 26,
+                  fontWeight: 900,
+                  color: "#2C1810",
+                  lineHeight: 1,
+                  display: "block",
+                }}
+              >
+                {profileData.overallRating}
+              </span>
+              {/* Silhouette placeholder */}
+              <div
+                className="mx-auto"
+                style={{
+                  width: 80,
+                  height: 90,
+                  marginTop: 8,
+                  borderRadius: 4,
+                  backgroundColor: "rgba(44, 24, 16, 0.1)",
+                }}
+              />
+              {/* Name placeholder bar */}
+              <div
+                className="mx-auto"
+                style={{
+                  width: "80%",
+                  height: 8,
+                  marginTop: 12,
+                  borderRadius: 4,
+                  backgroundColor: "rgba(44, 24, 16, 0.15)",
+                }}
+              />
+              {/* Stats placeholder bars */}
+              <div className="mx-auto mt-3 flex justify-center gap-1">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: 16,
+                      height: 20,
+                      borderRadius: 2,
+                      backgroundColor: "rgba(44, 24, 16, 0.1)",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
             <button
               onClick={() => setShowCard(true)}
               className="rounded-2xl px-10 py-4 text-base font-bold uppercase tracking-wide transition-all hover:scale-[1.02]"
               style={{
-                background:
-                  "linear-gradient(135deg, #D4A843 0%, #B8922E 50%, #D4A843 100%)",
-                color: "#0a1628",
-                boxShadow:
-                  "0 0 20px rgba(212,168,67,0.3), 0 4px 12px rgba(0,0,0,0.3)",
+                background: "linear-gradient(135deg, #E8D48B 0%, #C4A962 50%, #E8D48B 100%)",
+                color: "#2C1810",
+                boxShadow: "0 0 20px rgba(196,169,98,0.3), 0 4px 12px rgba(0,0,0,0.3)",
               }}
             >
-              Generate Card
+              Generate Your FC Card
             </button>
           </div>
         </div>
