@@ -107,22 +107,33 @@ export async function parsePdfWithClaude(
 
   const rawJson = textBlock.text.trim();
 
+  console.log("[parse-pdf] Claude raw response length:", rawJson.length);
+  console.log("[parse-pdf] Claude raw response start:", rawJson.substring(0, 500));
+
   let parsed: unknown;
   try {
     parsed = JSON.parse(rawJson);
-  } catch {
+  } catch (jsonError) {
+    console.error("[parse-pdf] Direct JSON.parse failed:", jsonError);
     const fenceMatch = rawJson.match(/```(?:json)?\s*([\s\S]*?)```/);
     if (fenceMatch) {
       parsed = JSON.parse(fenceMatch[1].trim());
     } else {
       throw new Error(
         "Claude response was not valid JSON. Raw start: " +
-          rawJson.substring(0, 200)
+          rawJson.substring(0, 500)
       );
     }
   }
 
-  return validateAndClamp(parsed);
+  try {
+    return validateAndClamp(parsed);
+  } catch (validationError) {
+    console.error("[parse-pdf] Validation failed:", validationError);
+    console.error("[parse-pdf] Parsed data keys:", Object.keys(parsed as Record<string, unknown>));
+    console.error("[parse-pdf] Parsed data preview:", JSON.stringify(parsed, null, 2).substring(0, 1000));
+    throw validationError;
+  }
 }
 
 function validateAndClamp(data: unknown): ProfileData {

@@ -69,12 +69,14 @@ export async function POST(
       ...(warnings.length > 0 && { warnings }),
     });
   } catch (error) {
+    console.error("[parse-pdf] Error caught:", error instanceof Error ? error.message : error);
+
     if (
       error instanceof Error &&
       (error.message.includes("not valid JSON") ||
         error.message.includes("not an object"))
     ) {
-      console.error("Corrupted PDF or unreadable content:", error);
+      console.error("[parse-pdf] JSON/structure error:", error.message);
       return NextResponse.json(
         {
           success: false as const,
