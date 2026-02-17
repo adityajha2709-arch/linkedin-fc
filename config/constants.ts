@@ -15,6 +15,8 @@ export const CLAUDE_MODEL = "claude-sonnet-4-5-20250929";
 export const CLAUDE_MAX_TOKENS = 4096;
 
 export const LINKEDIN_CONFIDENCE_THRESHOLD = 0.5;
+export const SPARSE_PROFILE_MIN_ROLES = 2;
+export const SPARSE_PROFILE_MIN_MEANINGFUL_SKILLS = 3;
 
 export const MAX_PHOTO_SIZE_BYTES = 5 * 1024 * 1024;
 export const ALLOWED_IMAGE_TYPES = [

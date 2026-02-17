@@ -1,6 +1,13 @@
 "use client";
 
-import { useRef, useState, type DragEvent, type ChangeEvent } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  type DragEvent,
+  type ChangeEvent,
+} from "react";
 import { useRouter } from "next/navigation";
 import { useProfile } from "@/lib/profile-context";
 import type { ParsePdfResponse, ParsePdfErrorResponse } from "@/types/profile";
@@ -24,6 +31,19 @@ export default function PdfUploader() {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
+  const warningTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const navigateToProfile = useCallback(() => {
+    if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
+    router.push("/profile");
+  }, [router]);
+
+  useEffect(() => {
+    return () => {
+      if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
+    };
+  }, []);
 
   async function handleFile(file: File) {
     setError(null);
@@ -42,7 +62,13 @@ export default function PdfUploader() {
 
       if (json.success) {
         setProfileData(json.data);
-        router.push("/profile");
+
+        if (json.warnings && json.warnings.length > 0) {
+          setWarning(json.warnings.map((w) => w.message).join(" "));
+          warningTimerRef.current = setTimeout(navigateToProfile, 3000);
+        } else {
+          router.push("/profile");
+        }
       } else {
         const code = json.error.code;
         setError(ERROR_MESSAGES[code] || json.error.error);
@@ -164,6 +190,35 @@ export default function PdfUploader() {
               className="mt-2 text-xs font-bold uppercase tracking-wider text-accent hover:underline"
             >
               Try again
+            </button>
+          </div>
+        </div>
+      )}
+
+      {warning && (
+        <div className="flex items-start gap-3 rounded-2xl border border-accent/20 bg-accent/5 p-4 shadow-[0_0_20px_rgba(196,169,98,0.05)]">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mt-0.5 shrink-0 text-accent"
+          >
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          <div className="flex-1">
+            <p className="text-sm text-text-secondary">{warning}</p>
+            <button
+              onClick={navigateToProfile}
+              className="mt-2 text-xs font-bold uppercase tracking-wider text-accent hover:underline"
+            >
+              Continue now &rarr;
             </button>
           </div>
         </div>

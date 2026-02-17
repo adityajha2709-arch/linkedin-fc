@@ -45,9 +45,15 @@ export interface ParseError {
     | "API_ERROR";
 }
 
+export interface ParseWarning {
+  code: "LOW_CONFIDENCE" | "SPARSE_PROFILE";
+  message: string;
+}
+
 export interface ParsePdfResponse {
   success: true;
   data: ProfileData;
+  warnings?: ParseWarning[];
 }
 
 export interface ParsePdfErrorResponse {
