@@ -30,7 +30,7 @@ IMPORTANT RULES:
     {
       "title": "string — Job title",
       "company": "string — Company name",
-      "location": "string | undefined — Role location if different from main location",
+      "location": "string or null — Role location if different from main location. Use null if not available.",
       "startDate": "string — e.g. 'Jan 2020'",
       "endDate": "string — e.g. 'Present' or 'Dec 2023'",
       "description": "string — Role description or responsibilities. Empty string if none."
@@ -40,9 +40,9 @@ IMPORTANT RULES:
     {
       "institution": "string — School/university name",
       "degree": "string — Degree and field, e.g. 'BS Computer Science'",
-      "startYear": "string | undefined",
-      "endYear": "string | undefined",
-      "description": "string | undefined — Honors, activities, etc."
+      "startYear": "string or null — Use null if not available",
+      "endYear": "string or null — Use null if not available",
+      "description": "string or null — Honors, activities, etc. Use null if not available"
     }
   ],
   "skills": [
@@ -110,20 +110,30 @@ export async function parsePdfWithClaude(
   console.log("[parse-pdf] Claude raw response length:", rawJson.length);
   console.log("[parse-pdf] Claude raw response start:", rawJson.substring(0, 500));
 
+  // Sanitize: replace JavaScript `undefined` with JSON `null`
+  const sanitizeJson = (str: string) =>
+    str.replace(/:\s*undefined\b/g, ": null");
+
+  let jsonStr = rawJson;
+
+  // Strip markdown fences if present
+  const fenceMatch = jsonStr.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (fenceMatch) {
+    jsonStr = fenceMatch[1].trim();
+  }
+
+  jsonStr = sanitizeJson(jsonStr);
+
   let parsed: unknown;
   try {
-    parsed = JSON.parse(rawJson);
+    parsed = JSON.parse(jsonStr);
   } catch (jsonError) {
-    console.error("[parse-pdf] Direct JSON.parse failed:", jsonError);
-    const fenceMatch = rawJson.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if (fenceMatch) {
-      parsed = JSON.parse(fenceMatch[1].trim());
-    } else {
-      throw new Error(
-        "Claude response was not valid JSON. Raw start: " +
-          rawJson.substring(0, 500)
-      );
-    }
+    console.error("[parse-pdf] JSON.parse failed after sanitization:", jsonError);
+    console.error("[parse-pdf] Sanitized JSON start:", jsonStr.substring(0, 500));
+    throw new Error(
+      "Claude response was not valid JSON. Raw start: " +
+        rawJson.substring(0, 500)
+    );
   }
 
   try {
