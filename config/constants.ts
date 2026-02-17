@@ -29,3 +29,8 @@ export const RATING_TIERS = [
   { min: 75, max: 84, label: "Professional", color: "#B8922E" },
   { min: 65, max: 74, label: "Rising Star", color: "#C9A84C" },
 ] as const;
+
+export const CARD_BG_GRADIENT_START = "#D4A843";
+export const CARD_BG_GRADIENT_END = "#B8922E";
+export const CARD_TEXT_DARK = "#0a1628";
+export const CARD_WATERMARK = "LinkedIn FC";

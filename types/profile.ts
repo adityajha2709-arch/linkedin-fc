@@ -54,3 +54,21 @@ export interface ParsePdfErrorResponse {
   success: false;
   error: ParseError;
 }
+
+export interface CardData {
+  name: string;
+  photo: string | null;
+  currentRole: string;
+  currentCompany: string;
+  overallRating: number;
+  skills: SkillEntry[];
+}
+
+export interface GenerateCardRequest {
+  cardData: CardData;
+}
+
+export interface GenerateCardErrorResponse {
+  success: false;
+  error: string;
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useProfile } from "@/lib/profile-context";
 import ProfileHeader from "./profile-header";
@@ -7,11 +8,13 @@ import ProfileSummary from "./profile-summary";
 import CareerTimeline from "./career-timeline";
 import EducationTimeline from "./education-timeline";
 import SkillsRadar from "./skills-radar";
+import CardModal from "@/components/card/card-modal";
 
 export default function ProfilePage() {
   const router = useRouter();
   const { profileData, photoOverride, setPhotoOverride, clearProfile } =
     useProfile();
+  const [showCard, setShowCard] = useState(false);
 
   if (!profileData) return null;
 
@@ -75,23 +78,23 @@ export default function ProfilePage() {
           {/* Generate Card CTA */}
           <div className="flex justify-center pb-8">
             <button
-              disabled
-              className="rounded-2xl px-10 py-4 text-base font-bold uppercase tracking-wide transition-all"
+              onClick={() => setShowCard(true)}
+              className="rounded-2xl px-10 py-4 text-base font-bold uppercase tracking-wide transition-all hover:scale-[1.02]"
               style={{
                 background:
                   "linear-gradient(135deg, #D4A843 0%, #B8922E 50%, #D4A843 100%)",
                 color: "#0a1628",
                 boxShadow:
-                  "0 0 20px rgba(212,168,67,0.2), 0 4px 12px rgba(0,0,0,0.3)",
-                opacity: 0.6,
-                cursor: "not-allowed",
+                  "0 0 20px rgba(212,168,67,0.3), 0 4px 12px rgba(0,0,0,0.3)",
               }}
             >
-              Generate Card — Coming Soon
+              Generate Card
             </button>
           </div>
         </div>
       </div>
+
+      <CardModal isOpen={showCard} onClose={() => setShowCard(false)} />
     </div>
   );
 }
