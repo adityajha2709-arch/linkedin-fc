@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { ProfileProvider } from "@/lib/profile-context";
 import "./globals.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ProfileProvider>{children}</ProfileProvider>
+        <Analytics />
       </body>
     </html>
   );
