@@ -16,18 +16,18 @@ import {
 } from "@/config/constants";
 
 const SAMPLE = {
-  name: "SARAH CHEN",
-  rating: 92,
-  role: "Product Lead",
+  name: "ALEX MORGAN",
+  rating: 91,
+  role: "Product Manager",
   company: "TechCorp",
-  initials: "SC",
+  initials: "AM",
   skills: [
-    { label: "STRATEGY", score: 94 },
-    { label: "LEADERSHIP", score: 91 },
+    { label: "STRATEGY", score: 93 },
+    { label: "LEADERSHIP", score: 90 },
     { label: "ANALYTICS", score: 88 },
-    { label: "COMM", score: 90 },
+    { label: "PRODUCT", score: 91 },
     { label: "EXECUTION", score: 87 },
-    { label: "VISION", score: 93 },
+    { label: "VISION", score: 92 },
   ],
 };
 

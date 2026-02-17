@@ -105,10 +105,10 @@ export default function PdfUploader() {
 
   if (isUploading) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-white/[0.06] bg-card-bg p-14">
+      <div className="registration-border flex flex-col items-center justify-center gap-4 rounded-xl bg-card-bg/80 p-10">
         <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-white/10 border-t-accent" />
-        <p className="text-base font-semibold text-white">Analyzing your profile...</p>
-        <p className="text-sm text-text-tertiary">This usually takes a few seconds</p>
+        <p className="text-base font-bold uppercase tracking-wide text-white">Scouting your profile...</p>
+        <p className="text-sm text-text-tertiary">Analyzing career stats and performance data</p>
       </div>
     );
   }
@@ -126,13 +126,16 @@ export default function PdfUploader() {
         onDragOver={onDragOver}
         onDragEnter={onDragOver}
         onDragLeave={onDragLeave}
-        className={`flex cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-14 transition-all ${
+        className={`registration-border flex cursor-pointer flex-col items-center justify-center gap-4 rounded-xl p-10 transition-all ${
           isDragging
-            ? "border-accent bg-accent/5 shadow-[0_0_30px_rgba(0,230,118,0.1)]"
-            : "border-white/10 bg-card-bg hover:border-accent/40 hover:bg-card-bg-light hover:shadow-[0_0_20px_rgba(0,230,118,0.05)]"
+            ? "bg-pitch-green/20 shadow-[0_0_40px_rgba(196,169,98,0.15)]"
+            : "bg-card-bg/80 hover:bg-card-bg hover:shadow-[0_0_30px_rgba(196,169,98,0.08)]"
         }`}
       >
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.04]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent/60">
+          Player Registration
+        </p>
+        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-accent/20 bg-accent/[0.06]">
           <svg
             width="28"
             height="28"
@@ -142,7 +145,7 @@ export default function PdfUploader() {
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-text-secondary"
+            className="text-accent/70"
           >
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <polyline points="17 8 12 3 7 8" />
@@ -150,11 +153,11 @@ export default function PdfUploader() {
           </svg>
         </div>
         <div className="text-center">
-          <p className="text-base font-semibold text-white">
+          <p className="text-base font-bold uppercase tracking-wide text-white">
             Upload your LinkedIn PDF
           </p>
           <p className="mt-1 text-sm text-text-tertiary">
-            Drag and drop or click to browse
+            Drag & drop your profile or click to select
           </p>
         </div>
         <input
@@ -164,6 +167,36 @@ export default function PdfUploader() {
           onChange={onFileChange}
           className="hidden"
         />
+      </div>
+
+      {/* LinkedIn export steps */}
+      <div className="flex flex-col items-center gap-2 py-1">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent/50">
+          Don&apos;t have a PDF yet?
+        </p>
+        <div className="flex items-center gap-2 text-[11px] text-text-tertiary">
+          <span className="flex items-center gap-1.5">
+            <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-accent/10 text-[9px] font-bold text-accent">1</span>
+            <a
+              href="https://www.linkedin.com/in/me/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-accent underline decoration-accent/30 underline-offset-2 hover:decoration-accent/60"
+            >
+              Go to your profile
+            </a>
+          </span>
+          <span className="text-accent/30">&rarr;</span>
+          <span className="flex items-center gap-1.5">
+            <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-accent/10 text-[9px] font-bold text-accent">2</span>
+            Click <span className="font-semibold text-text-secondary">More (&hellip;)</span>
+          </span>
+          <span className="text-accent/30">&rarr;</span>
+          <span className="flex items-center gap-1.5">
+            <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-accent/10 text-[9px] font-bold text-accent">3</span>
+            <span className="font-semibold text-text-secondary">Save to PDF</span>
+          </span>
+        </div>
       </div>
 
       {error && (

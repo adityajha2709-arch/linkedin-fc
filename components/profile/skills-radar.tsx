@@ -4,10 +4,10 @@ interface SkillsRadarProps {
   skills: SkillEntry[];
 }
 
-const SIZE = 300;
+const SIZE = 340;
 const CENTER = SIZE / 2;
-const RADIUS = 110;
-const LABEL_OFFSET = 30;
+const RADIUS = 120;
+const LABEL_OFFSET = 38;
 const GRID_LEVELS = [0.25, 0.5, 0.75, 1];
 const ACCENT = "#D4A843";
 
@@ -28,6 +28,33 @@ function polygonPoints(count: number, radius: number): string {
     const p = getPoint(i, count, radius);
     return `${p.x},${p.y}`;
   }).join(" ");
+}
+
+const LABEL_ABBREVS: Record<string, string> = {
+  "RETENTION MARKETING": "RETENTION",
+  "LIFECYCLE MANAGEMENT": "LIFECYCLE",
+  "PRODUCT MARKETING": "PRODUCT",
+  "GROWTH STRATEGY": "STRATEGY",
+  "DATA ANALYTICS": "ANALYTICS",
+  "FUNNEL OPTIMIZATION": "FUNNELS",
+  "PROJECT MANAGEMENT": "PROJECT",
+  "TEAM LEADERSHIP": "LEADERSHIP",
+  "BUSINESS DEVELOPMENT": "BUSINESS",
+  "DIGITAL MARKETING": "DIGITAL",
+  "CONTENT STRATEGY": "CONTENT",
+  "USER EXPERIENCE": "UX",
+  "MACHINE LEARNING": "ML",
+  "SOFTWARE ENGINEERING": "SOFTWARE",
+  "SYSTEM DESIGN": "SYSTEMS",
+  "CLOUD COMPUTING": "CLOUD",
+};
+
+function shortenLabel(label: string): string {
+  const upper = label.toUpperCase();
+  if (LABEL_ABBREVS[upper]) return LABEL_ABBREVS[upper];
+  // Generic fallback: take first word, cap at 10 chars
+  const firstWord = upper.split(/\s+/)[0];
+  return firstWord.length > 10 ? firstWord.slice(0, 10) : firstWord;
 }
 
 function getScoreColor(score: number): string {
@@ -58,7 +85,7 @@ export default function SkillsRadar({ skills }: SkillsRadarProps) {
         </span>
       </h2>
       <div className="fifa-card p-4 sm:p-5">
-        <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="mx-auto w-full max-w-[280px]">
+        <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="mx-auto w-full max-w-[320px]">
           <defs>
             <filter id="glow">
               <feGaussianBlur stdDeviation="3" result="coloredBlur" />
@@ -167,7 +194,7 @@ export default function SkillsRadar({ skills }: SkillsRadarProps) {
                 fontSize="9"
                 fontWeight="500"
               >
-                {skill.label.toUpperCase()}
+                {shortenLabel(skill.label)}
               </text>
             );
           })}

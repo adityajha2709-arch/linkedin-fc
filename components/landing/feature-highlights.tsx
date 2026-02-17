@@ -1,7 +1,7 @@
 const features = [
   {
-    title: "AI-Powered",
-    description: "Claude AI reads your PDF and extracts career data automatically",
+    title: "AI Scout",
+    description: "Our AI scout analyzes your career dossier and extracts your stats",
     icon: (
       <svg
         width="18"
@@ -23,8 +23,8 @@ const features = [
     ),
   },
   {
-    title: "FIFA Card Style",
-    description: "Your career stats rendered as a premium football card",
+    title: "Pro Card",
+    description: "Your career rendered as a premium football player card",
     icon: (
       <svg
         width="18"
@@ -43,8 +43,8 @@ const features = [
     ),
   },
   {
-    title: "Instant Download",
-    description: "Download as PNG, perfect for LinkedIn profile pictures",
+    title: "Instant Export",
+    description: "Download your card as PNG, ready for your lineup photo",
     icon: (
       <svg
         width="18"
@@ -66,24 +66,29 @@ const features = [
 
 export default function FeatureHighlights() {
   return (
-    <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3">
-      {features.map((f) => (
-        <div
-          key={f.title}
-          className="flex flex-col items-center gap-2 rounded-xl border border-accent/10 bg-card-bg p-5 text-center transition-shadow hover:shadow-[0_0_20px_rgba(196,169,98,0.08)]"
-          style={{
-            borderTop: "2px solid rgba(196, 169, 98, 0.4)",
-          }}
-        >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent">
-            {f.icon}
+    <div className="w-full">
+      <div className="mb-4 flex items-center gap-3">
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-accent">
+          Club Perks
+        </p>
+        <div className="h-px flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
+      </div>
+      <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3">
+        {features.map((f) => (
+          <div
+            key={f.title}
+            className="matchday-card flex flex-col items-center gap-3 rounded-xl p-5 text-center transition-all hover:translate-y-[-2px] hover:shadow-[0_0_25px_rgba(196,169,98,0.1)]"
+          >
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent/15 bg-accent/[0.08] text-accent">
+              {f.icon}
+            </div>
+            <p className="text-xs font-semibold text-white">{f.title}</p>
+            <p className="text-[11px] leading-relaxed text-text-tertiary">
+              {f.description}
+            </p>
           </div>
-          <p className="text-xs font-semibold text-white">{f.title}</p>
-          <p className="text-[11px] leading-relaxed text-text-tertiary">
-            {f.description}
-          </p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

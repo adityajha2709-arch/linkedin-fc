@@ -45,7 +45,7 @@ const steps = [
   {
     number: 3,
     title: "Save to PDF",
-    detail: "Select \u2018Save to PDF\u2019 from the dropdown menu",
+    detail: "Select \u2018Save to PDF\u2019 to download your career dossier",
     icon: (
       <svg
         width="22"
@@ -69,12 +69,15 @@ const steps = [
 export default function ExportSteps() {
   return (
     <div className="w-full">
-      <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">
-        How to Export
-      </p>
+      <div className="flex items-center gap-3">
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-accent">
+          Your Game Plan
+        </p>
+        <div className="h-px flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
+      </div>
 
-      {/* Single container panel */}
-      <div className="animate-fade-in-up relative mt-4 rounded-2xl bg-white/[0.02] px-6 py-6 sm:px-8">
+      {/* Tactical board container */}
+      <div className="animate-fade-in-up tactical-card relative mt-4 rounded-xl px-6 py-6 sm:px-8">
         {/* Dashed connecting line — desktop only */}
         <div
           className="pointer-events-none absolute hidden sm:block"
@@ -83,7 +86,7 @@ export default function ExportSteps() {
             right: "16.67%",
             top: 51,
             height: 0,
-            borderTop: "1px dashed rgba(196, 169, 98, 0.25)",
+            borderTop: "1px dashed rgba(26, 92, 53, 0.4)",
           }}
         />
 
@@ -92,7 +95,7 @@ export default function ExportSteps() {
             <div key={step.number} className="flex items-start gap-4 sm:flex-1 sm:flex-col sm:items-center sm:gap-3 sm:text-center">
               {/* Number circle */}
               <div className="flex shrink-0 flex-col items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-sm font-bold text-accent">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-pitch-green-light/40 bg-pitch-green/30 text-sm font-bold text-accent">
                   {step.number}
                 </div>
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04]">

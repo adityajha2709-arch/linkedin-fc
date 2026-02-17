@@ -59,24 +59,8 @@ export default function ProfilePage() {
             skillsCount={profileData.skills.length}
           />
 
-          {/* Two-column: Scouting Report + Radar Chart */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-            <div className="lg:col-span-3">
-              <ProfileSummary summary={profileData.summary} />
-            </div>
-            <div className="lg:col-span-2">
-              <SkillsRadar skills={profileData.skills} />
-            </div>
-          </div>
-
-          {/* Club Career — full width */}
-          <CareerTimeline entries={profileData.careerHistory} />
-
-          {/* Youth Development — full width */}
-          <EducationTimeline entries={profileData.education} />
-
-          {/* Generate Card CTA */}
-          <div className="flex flex-col items-center gap-6 pb-8">
+          {/* Generate Card CTA — placed right after header for visibility */}
+          <div className="flex flex-col items-center gap-6">
             {/* Generic card preview (decorative) */}
             <div
               className="relative cursor-pointer opacity-80 transition-all hover:scale-[1.02] hover:opacity-100"
@@ -154,6 +138,22 @@ export default function ProfilePage() {
               Generate Your FC Card
             </button>
           </div>
+
+          {/* Two-column: Scouting Report + Radar Chart */}
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+            <div className="lg:col-span-3">
+              <ProfileSummary summary={profileData.summary} />
+            </div>
+            <div className="lg:col-span-2">
+              <SkillsRadar skills={profileData.skills} />
+            </div>
+          </div>
+
+          {/* Club Career — full width */}
+          <CareerTimeline entries={profileData.careerHistory} />
+
+          {/* Youth Development — full width */}
+          <EducationTimeline entries={profileData.education} />
         </div>
       </div>
 

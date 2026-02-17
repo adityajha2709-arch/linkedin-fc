@@ -44,7 +44,8 @@ export default function PhotoUpload({
         style={{
           boxShadow: photo
             ? `0 0 20px ${glowColor}40, 0 0 40px ${glowColor}20`
-            : undefined,
+            : `0 0 15px ${glowColor}30, 0 0 30px ${glowColor}15`,
+          animation: !photo ? "photo-spotlight 2s ease-in-out infinite" : undefined,
         }}
       >
         {/* Ring border — only when photo exists */}
@@ -73,7 +74,6 @@ export default function PhotoUpload({
         ) : (
           <div
             className="flex h-full w-full items-center justify-center rounded-full bg-card-bg-light"
-            style={{ animation: "pulse-ring 2s ease-in-out infinite" }}
           >
             <svg
               width="36"
@@ -112,9 +112,14 @@ export default function PhotoUpload({
       </button>
 
       {!photo && (
-        <p className="mt-2 text-center text-xs font-medium text-text-secondary">
-          Add photo
-        </p>
+        <div className="mt-1 flex flex-col items-center">
+          <span className="text-[8px] leading-none text-accent/50">&#9650;</span>
+          <div className="rounded-md border border-accent/15 bg-accent/[0.08] px-2.5 py-1.5">
+            <p className="text-center text-[10px] font-medium text-accent/80">
+              Add your photo for the best card
+            </p>
+          </div>
+        </div>
       )}
 
       <input

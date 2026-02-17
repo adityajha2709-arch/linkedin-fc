@@ -5,57 +5,104 @@ import SampleCardPreview from "@/components/landing/sample-card-preview";
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen flex-col items-center bg-surface px-4 pb-12">
-      {/* Background radial glows */}
+    <div className="stadium-bg pitch-texture relative flex min-h-screen flex-col items-center px-4 pb-12">
+      {/* Stadium spotlight effects — layered decorative elements */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-1/2 top-1/4 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.03] blur-3xl" />
-        <div className="absolute left-1/4 top-3/4 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.02] blur-3xl" />
+        {/* Stadium floodlight glow */}
+        <div className="stadium-light absolute inset-0" />
+        {/* Floodlight sweep (separate div to avoid ::before conflict with pitch-texture) */}
+        <div className="floodlight-sweep absolute inset-0" />
+        {/* Warm gold glow from left */}
+        <div className="absolute left-0 top-0 h-[600px] w-[400px] bg-gradient-to-br from-accent/[0.04] to-transparent blur-3xl" />
+        {/* Green pitch glow from right */}
+        <div className="absolute right-0 top-1/4 h-[400px] w-[300px] bg-gradient-to-bl from-pitch-green/[0.08] to-transparent blur-3xl" />
+        {/* Hex texture overlay */}
+        <div className="hex-texture absolute inset-0 opacity-50" />
       </div>
 
-      <main className="relative flex w-full flex-col items-center gap-10 pt-16 sm:pt-24">
-        {/* Hero — wider container for side-by-side layout */}
-        <div className="w-full max-w-4xl">
-          <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
-            {/* Left: text + uploader */}
+      <main className="relative z-10 flex w-full flex-col items-center gap-16 pt-16 sm:pt-24">
+        {/* ===== HERO SECTION ===== */}
+        <div className="w-full max-w-5xl">
+          <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+            {/* Left: Title + Upload */}
             <div className="flex flex-col items-center text-center lg:flex-1 lg:items-start lg:text-left">
-              <h1 className="text-5xl font-black tracking-tight text-white sm:text-6xl">
-                LinkedIn <span className="text-accent">FC</span>
-              </h1>
-              <p className="mt-3 text-lg text-text-secondary">
+              {/* Club crest / match-day header */}
+              <div className="flex flex-col items-center lg:items-start">
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent/60">
+                  Career Card Generator
+                </p>
+                <h1 className="mt-2 text-5xl font-black uppercase tracking-tight text-white sm:text-6xl">
+                  LinkedIn{" "}
+                  <span
+                    className="text-accent"
+                    style={{
+                      textShadow: "0 0 40px rgba(196, 169, 98, 0.3)",
+                    }}
+                  >
+                    FC
+                  </span>
+                </h1>
+                {/* Gold underline decoration */}
+                <div className="mt-2 flex items-center gap-2">
+                  <div className="h-0.5 w-8 bg-accent/60" />
+                  <div className="h-1 w-1 rounded-full bg-accent/40" />
+                  <div className="h-0.5 w-16 bg-gradient-to-r from-accent/60 to-transparent" />
+                </div>
+              </div>
+
+              <p className="mt-4 text-lg font-medium text-text-secondary">
                 Turn your career into a football card
               </p>
-              <p className="mt-2 text-sm text-text-tertiary">
+              <p className="mt-1.5 text-sm text-text-tertiary">
                 Upload your LinkedIn PDF and get a FIFA-style career card in
                 seconds
               </p>
+
               <div className="mt-8 w-full max-w-md">
                 <PdfUploader />
               </div>
             </div>
 
-            {/* Right: sample card preview — desktop only */}
-            <div
-              className="hidden lg:flex lg:shrink-0 lg:items-center lg:justify-center"
-              style={{ width: 260, height: 345 }}
-            >
-              <div
-                style={{
-                  transform: "scale(0.62) rotate(-2deg)",
-                  transformOrigin: "center center",
-                }}
-              >
-                <SampleCardPreview />
+            {/* Right: Sample card with glow + float — desktop only */}
+            <div className="hidden lg:flex lg:shrink-0 lg:items-center lg:justify-center">
+              {/* Glow container */}
+              <div className="card-glow relative" style={{ padding: 20 }}>
+                {/* Ambient glow behind card */}
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-2xl"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at center, rgba(196, 169, 98, 0.15) 0%, transparent 70%)",
+                  }}
+                />
+                {/* Floating card */}
+                <div
+                  className="card-float relative"
+                  style={{
+                    transform: "scale(0.65)",
+                    transformOrigin: "center center",
+                  }}
+                >
+                  <SampleCardPreview />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Below hero — narrower container */}
-        <div className="flex w-full max-w-lg flex-col items-center gap-10">
-          {/* How to export steps */}
+        {/* ===== FOOTBALL-THEMED DIVIDER ===== */}
+        <div className="w-full max-w-lg">
+          <div className="section-divider-football">
+            <div className="ball" />
+          </div>
+        </div>
+
+        {/* ===== BELOW HERO — Instructions & Features ===== */}
+        <div className="flex w-full max-w-lg flex-col items-center gap-12">
+          {/* Export steps — tactical instructions */}
           <ExportSteps />
 
-          {/* Feature highlights */}
+          {/* Feature highlights — club perks */}
           <FeatureHighlights />
 
           {/* Notices */}
@@ -90,6 +137,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="mt-auto pt-12 text-center">
+        <div className="mx-auto mb-4 h-px w-32 bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-text-tertiary/50">
           LinkedIn FC
         </p>
